@@ -1,0 +1,57 @@
+# =============================================================================
+#  BONUS (optional) — Fastlane lanes used by the Firebase delivery
+#  Complete every "TODO". Docs: https://docs.fastlane.tools/actions/gradle/
+#  and https://firebase.google.com/docs/app-distribution/android/distribute-fastlane
+#
+#  Try locally:   bundle exec fastlane android test
+# =============================================================================
+default_platform(:android)
+
+RELEASE_APK = File.expand_path("../androidApp/build/outputs/apk/release/androidApp-release.apk", __dir__)
+
+platform :android do
+
+  desc "Run the unit tests (shared commonTest on the JVM + androidApp)"
+  lane :test do
+    # TODO 2.1 — use the "gradle" action with the "tasks:" parameter
+    #   to run ":shared:testDebugUnitTest" and ":androidApp:testDebugUnitTest"
+  end
+
+  desc "Build a debug APK"
+  lane :build_debug do
+    gradle(task: ":androidApp:assembleDebug")
+  end
+
+  desc "Build a release APK (signed with the CI keystore if KEYSTORE_PATH is set)"
+  lane :build_release do
+    # TODO 2.2 — build the release APK of the :androidApp module
+  end
+
+  desc "Test + build release + upload to Firebase App Distribution"
+  lane :distribute do
+    # TODO 2.3 — call the lanes "test" then "build_release" (a lane can call another lane)
+
+    notes = ENV.fetch("RELEASE_NOTES", "").strip
+    if notes.empty?
+      # TODO 2.4 — generate notes from the last 5 commits with
+      #   changelog_from_git_commits (pretty format "- %s (%an)", exclude merges)
+      notes = "TODO"
+    end
+
+    apk = File.exist?(RELEASE_APK) ? RELEASE_APK : lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+
+    # TODO 2.5 — upload the APK with the firebase_app_distribution action:
+    #   app:                      ENV FIREBASE_APP_ID
+    #   service_credentials_file: ENV FIREBASE_SERVICE_ACCOUNT_PATH
+    #   android_artifact_type:    "APK"
+    #   android_artifact_path:    apk
+    #   groups:                   ENV FIREBASE_TESTER_GROUPS (default "classmates")
+    #   release_notes:            notes
+
+    UI.success("SwapCampus build #{ENV.fetch('VERSION_CODE', 'local')} sent to Firebase testers")
+  end
+
+  error do |lane, exception|
+    UI.error("Lane #{lane} failed: #{exception.message}")
+  end
+end

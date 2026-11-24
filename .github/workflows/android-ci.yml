@@ -1,0 +1,42 @@
+# =============================================================================
+#  EXERCISE — Continuous Integration for SwapCampus (about 10 minutes)
+#  Goal: on every push, GitHub runs the unit tests and builds the APK.
+#  Complete the 4 "TODO" below, commit, push, then open the "Actions" tab.
+# =============================================================================
+name: CI
+
+on:
+  # TODO 1 — run this workflow on every push to the main branch
+  #          (keep workflow_dispatch: it adds a "Run workflow" button)
+  workflow_dispatch:
+
+jobs:
+  android:
+    name: Test & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # TODO 2 — install Java with actions/setup-java@v5
+      #          distribution: temurin, java-version: 25
+      #          (25 comes from gradle/gradle-daemon-jvm.properties)
+
+      - name: Set up Gradle (with cache = faster runs)
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      # TODO 3 — run the unit tests:  ./gradlew :shared:testDebugUnitTest
+
+      # TODO 4 — build the debug APK:  ./gradlew :androidApp:assembleDebug
+
+      - name: Download the APK from the run page
+        uses: actions/upload-artifact@v4
+        with:
+          name: swapcampus-debug
+          path: androidApp/build/outputs/apk/debug/*.apk
+          retention-days: 3

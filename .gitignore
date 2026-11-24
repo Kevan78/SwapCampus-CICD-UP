@@ -1,0 +1,31 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+.kotlin/
+/build
+**/build/
+.idea/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# --- CI/CD secrets: never commit them ---
+*.jks
+*.keystore
+firebase-service-account*.json
+service-account*.json
+
+# --- Fastlane / Ruby ---
+fastlane/report.xml
+fastlane/README.md
+fastlane/test_output
+vendor/bundle
+.bundle

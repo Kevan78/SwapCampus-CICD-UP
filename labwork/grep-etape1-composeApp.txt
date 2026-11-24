@@ -1,0 +1,19 @@
+# Étape 1 — grep sur composeApp/src/main (équivalent androidMain)
+# Commande :
+# grep -rnE "R\.string|import android\.|androidx\.(appcompat|annotation|navigation)|import java\." composeApp/src/main
+
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:18:import androidx.navigation.NavType
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:19:import androidx.navigation.NavGraph.Companion.findStartDestination
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:20:import androidx.navigation.compose.NavHost
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:21:import androidx.navigation.compose.composable
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:22:import androidx.navigation.compose.currentBackStackEntryAsState
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:23:import androidx.navigation.compose.rememberNavController
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/navigation/AppNavigation.kt:24:import androidx.navigation.navArgument
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/theme/Theme.kt:3:import android.app.Activity
+composeApp/src/main/java/com/example/swapcampus_geoffroykevan/ui/theme/Theme.kt:4:import android.os.Build
+
+# Complément — shared (hors commande polycopié, bloque KMP iOS) :
+# shared/src/main/kotlin/com/example/swapcampus_geoffroykevan/domain/DateUtils.kt:6:    val now = java.time.LocalDate.now()
+
+# Complément — thème (LocalContext, non couvert par le grep) :
+# composeApp/src/main/java/.../ui/theme/Theme.kt:12:import androidx.compose.ui.platform.LocalContext
